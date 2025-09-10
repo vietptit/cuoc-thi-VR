@@ -51,5 +51,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "VR 9_9.sln"
+    "dotnet.defaultSolution": "cuoc-thi-VR.sln"
 }
