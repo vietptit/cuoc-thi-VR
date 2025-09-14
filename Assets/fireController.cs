@@ -8,8 +8,8 @@ public class fireController : MonoBehaviour
     [SerializeField] ParticleSystem ps2;
     [SerializeField] float dame = 0.1f;
 
-    UnityEngine.ParticleSystem.MainModule main;
-    UnityEngine.ParticleSystem.MainModule main2;
+    public UnityEngine.ParticleSystem.MainModule main;
+    public UnityEngine.ParticleSystem.MainModule main2;
 
     void Start()
     {
@@ -29,6 +29,7 @@ public class fireController : MonoBehaviour
                 size.constantMax -= dame;
                 main.startSize = size;   
             }
+            
             // else if (main2.startSize.constantMax > 0)
             // {
             //     var size2 = main2.startSize;
@@ -37,7 +38,9 @@ public class fireController : MonoBehaviour
             // }
             else
             {
-                Destroy(gameObject);
+                main.loop = false;
+
+                
             }
         }
     }

@@ -11,14 +11,32 @@ public class PlayerJump : MonoBehaviour
     [SerializeField] private LayerMask groundLayers;
     [SerializeField] InputAction JumbButtonSpace;
     private float gravity = Physics.gravity.y;
+    [SerializeField] float movementThreshold=0.1f;
+
+    Vector3 lastMove;
+    AudioSource audioSource;
     private Vector3 movement;
 
     void Start()
     {
         JumbButtonSpace.Enable();
+        audioSource = GetComponent<AudioSource>();
+        lastMove = transform.position;
     }
     private void Update()
     {
+        if (transform.position!=lastMove)
+        {
+            Debug.Log("1111");
+            
+            if (!audioSource.isPlaying)
+            {
+
+                audioSource.Play();
+            }
+            lastMove= transform.position;
+        }
+
         bool _isGrounded = IsGrounded();
 
         if ((JumbButtonSpace.IsPressed()||jumpButton.action.WasPressedThisFrame()) && _isGrounded)

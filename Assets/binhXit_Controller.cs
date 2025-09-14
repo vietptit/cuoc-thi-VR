@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class binhXit_Controller : MonoBehaviour
 {
-    [SerializeField] UnityEngine.ParticleSystem.MainModule main;
+    UnityEngine.ParticleSystem.MainModule main;
     [SerializeField] ParticleSystem _particleSystem;
     [SerializeField] GameObject dan;
     [SerializeField] float timeDuration;
@@ -12,6 +12,9 @@ public class binhXit_Controller : MonoBehaviour
     [SerializeField] bool isSpawn;
     [SerializeField] float bulletForce=5f;
      float timeCoolDown;
+     [SerializeField] Transform attach; 
+     [SerializeField]  AudioSource audioSource;
+     
     void Start()
     {
 
@@ -25,11 +28,13 @@ public class binhXit_Controller : MonoBehaviour
         timeCoolDown -= Time.deltaTime;
         if (isSpawn && timeCoolDown < 0)
         {
-            GameObject tmp = Instantiate(dan, transform.position, transform.rotation);
+            GameObject tmp = Instantiate(dan, attach.position,attach.rotation);
             timeCoolDown = timeDuration;
             Destroy(tmp, 5f);
             Rigidbody rb = tmp.GetComponent<Rigidbody>();
-            rb.AddRelativeForce(Vector3.forward * bulletForce * Time.deltaTime);
+            
+            rb.AddRelativeForce(Vector3.forward * -bulletForce, ForceMode.Impulse);
+
         }
     }
 
@@ -44,11 +49,16 @@ public class binhXit_Controller : MonoBehaviour
 
             main.loop = false;
             isSpawn = false;
+            audioSource.Stop();
 
         }
         else if (!main.loop)
         {
+            if (!audioSource.isPlaying)
+            {
 
+                audioSource.Play();
+            }
             main.loop = true;
             isSpawn = true;
         }
